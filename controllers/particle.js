@@ -34,7 +34,7 @@ exports.create_fss = function(){
 function fish(position){
     return{
         "position": position,
-        "food": false,
+        "weight": getRandomInt(300,600),
         "fitness": false
     }
 }
