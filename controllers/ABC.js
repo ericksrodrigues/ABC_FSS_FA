@@ -2,7 +2,7 @@ const makeparticle = require('./particle'),
     gerRandomLimit = require('../modules/LimitRandom'),
     lodash = require('lodash');
 
-module.exports = function (res, fitness) {
+module.exports = function (fitness) {
     /*initialization */
     let particles = makeparticle.create_abc();
     let sum_fitness = 0;
@@ -12,10 +12,12 @@ module.exports = function (res, fitness) {
     let best_position;
     let best_position_fitness;
     let setted_particles = 14
+    let array_keep_iteractions = [];
+
     /* selection exploration font */
     //console.log(particles);
 
-    for (let m = 0; m < 500; m++) {
+    for (let m = 0; m < 10000; m++) {
         sum_fitness = 0;
         for (let i = 0; i < qtd_explorer; i++) {
             particles[i].fitness = fitness(particles[i].position);
@@ -77,10 +79,13 @@ module.exports = function (res, fitness) {
         }
 
         /* send explorer again if food == 0 */
-        
-        console.log(best_position_fitness);
+            array_keep_iteractions.push({
+            "iteration": m,
+            "fitness": best_position_fitness
+        });
     }
     //console.log(particles);
+    return array_keep_iteractions;
 }
 
 function getRandomInt(min, max) {

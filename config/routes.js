@@ -1,7 +1,8 @@
 const ABC = require('../controllers/ABC'),
     FFA = require('../controllers/FFA'),
     FSS = require('../controllers/FSS'),
-    fitness= require('../modules/fitness');
+    fitness= require('../modules/fitness'),
+    analyse = require('../controllers/analyse');
 
 module.exports = function(app){
     app.get("/", function(req,res){
@@ -9,14 +10,18 @@ module.exports = function(app){
     });
 
     app.get("/abc", function(req,res){
-        ABC(res,fitness._rosenbrock);
+        ABC(fitness._rosenbrock);
     });
     
     app.get("/ffa", function(req,res){
-        FFA(res,fitness._rosenbrock);
+        FFA(fitness._rosenbrock);
     });
 
     app.get("/fss", function(req,res){
-        FSS(res,fitness._rosenbrock);
+        FSS(fitness._rosenbrock);
+    });
+
+    app.get("/analyse_sphere", function(req,res){
+        analyse.analyse_sphere(res);
     });
 }

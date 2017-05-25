@@ -2,11 +2,13 @@ const makeparticle = require('./particle'),
     gerRandomLimit = require('../modules/LimitRandom'),
     lodash = require('lodash');
 
-module.exports = function (res, fitness) {
+module.exports = function (fitness) {
     let fireflies = makeparticle.create_ffa();
     let best_position;
     let best_position_fitness;
     let b0 = 0.1;
+    let array_keep_iteractions = [];
+
     for(let i = 0; i < fireflies.length; i++){
         fireflies[i].intensit = fitness(fireflies[i].position);
         if(!best_position || fireflies[i].intensit < best_position_fitness){
@@ -44,6 +46,10 @@ module.exports = function (res, fitness) {
                 best_position = lodash.clone(fireflies[i].position);
             }
         }
-        console.log(m,best_position_fitness);
+         array_keep_iteractions.push({
+            "iteration": m,
+            "fitness": best_position_fitness
+        });
     }
+    return array_keep_iteractions;
 }

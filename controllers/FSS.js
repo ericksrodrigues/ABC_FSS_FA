@@ -2,7 +2,7 @@ const makeparticle = require('./particle'),
     gerRandomLimit = require('../modules/LimitRandom'),
     lodash = require('lodash');
 
-module.exports = function(req, fitness){
+module.exports = function(fitness){
     let fishes = makeparticle.create_fss();
     const stepind_initial = 1;
     const stepvol_initial = 2 * stepind_initial;
@@ -12,6 +12,7 @@ module.exports = function(req, fitness){
     let best_fish_fitness;
     let array_var_fitness = restartArray();
     let array_var_position = restartArray();
+    let array_keep_iteractions = [];
     //evaluate fitness of each fish and save de best
     lodash.forEach(fishes, (fish,index) => {
         fishes[index].fitness = fitness(fish.position);
@@ -114,8 +115,12 @@ module.exports = function(req, fitness){
         array_var_position = restartArray();
         array_var_fitness = restartArray();
         baricenter = restartArray();
-        console.log(best_fish_fitness);
-    }
+        //console.log(best_fish_fitness)
+        array_keep_iteractions.push({
+            "iteration": m,
+            "fitness": best_fish_fitness});
+        }
+    return array_keep_iteractions;
     
 }
 
